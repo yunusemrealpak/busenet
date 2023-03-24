@@ -1,9 +1,6 @@
 import 'package:busbus/busbus.dart';
 
-import 'configuration/network_configuration.dart';
-import 'models/base_response.dart';
-
-mixin INetworkManager<T extends BaseResponse<T>> {
+abstract class INetworkManager<T extends BaseResponse<T>> {
   ICoreDio get coreDio;
   void initialize(
     NetworkConfiguration configuration, {
