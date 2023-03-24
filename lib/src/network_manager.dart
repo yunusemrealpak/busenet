@@ -10,7 +10,7 @@ import 'i_netwok_manager.dart';
 import 'models/base_response.dart';
 
 class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
-  late ICoreDio<T> coreDio;
+  late ICoreDio<T> dio;
   late HiveCacheStore cacheStore;
 
   @override
@@ -52,9 +52,12 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       },
     );
 
-    coreDio = CoreDio<T>(baseOptions, cacheOptions, responseModel, entityKey)
+    dio = CoreDio<T>(baseOptions, cacheOptions, responseModel, entityKey)
       ..addInterceptor(DioCacheInterceptor(options: cacheOptions));
   }
+
+  @override
+  ICoreDio<T> get coreDio => dio;
 
   @override
   void addHeader(Map<String, dynamic> value) {
