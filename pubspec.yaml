@@ -1,0 +1,23 @@
+name: busbus
+description: A new Flutter network package.
+version: 0.1.0
+homepage: 'https://github.com/yunusemrealpak/busbus'
+
+environment:
+  sdk: '>=2.19.4 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  dio: ^5.0.3
+  dio_cache_interceptor: ^3.4.0
+  dio_cache_interceptor_hive_store: ^3.2.1
+  flutter:
+    sdk: flutter
+  path_provider: ^2.0.14
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter: null
