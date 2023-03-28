@@ -1,7 +1,7 @@
-name: busbus
+name: busenet
 description: A new Flutter network package.
 version: 0.1.3
-homepage: 'https://github.com/yunusemrealpak/busbus'
+homepage: 'https://github.com/yunusemrealpak/busenet'
 
 environment:
   sdk: '>=2.19.4 <3.0.0'

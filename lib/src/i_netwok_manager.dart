@@ -1,4 +1,6 @@
-import 'package:busbus/busbus.dart';
+import 'configuration/network_configuration.dart';
+import 'dio/i_core_dio.dart';
+import 'models/base_response.dart';
 
 abstract class INetworkManager<T extends BaseResponse<T>> {
   ICoreDio get coreDio;

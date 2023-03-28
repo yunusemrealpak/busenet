@@ -45,7 +45,7 @@ INetworkManager manager = NetworkManager<SampleResponseModel>()
 
 ```dart
 ...
-final response = await coreDio.send<SamplePostModel, SamplePostModel>(
+final response = await manager.coreDio.send<SamplePostModel, SamplePostModel>(
       '${NetworkPaths.getSamplePost}/1',
       parserModel: const SamplePostModel(),
       type: HttpTypes.get,
