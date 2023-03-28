@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busbus: ^0.1.0
+  busenet: ^0.1.0
 ```
 
 ### Usage
@@ -24,7 +24,7 @@ dependencies:
 #### Import the package
 
 ```dart
-import 'package:busbus/busbus.dart';
+import 'package:busenet/busenet.dart';
 ```
 
 #### Create a new Network Manager instance
@@ -64,4 +64,4 @@ final response = await manager.coreDio.send<SamplePostModel, SamplePostModel>(
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/yunusemrealpak/busbus/blob/main/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/yunusemrealpak/busenet/blob/main/LICENSE) file for details

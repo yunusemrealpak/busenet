@@ -1,6 +1,6 @@
 name: busenet
 description: A new Flutter network package.
-version: 0.1.3
+version: 0.1.4
 homepage: 'https://github.com/yunusemrealpak/busenet'
 
 environment:

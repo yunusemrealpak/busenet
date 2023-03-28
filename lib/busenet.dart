@@ -1,4 +1,4 @@
-library busbus;
+library busenet;
 
 export 'src/i_netwok_manager.dart';
 export 'src/network_manager.dart';
