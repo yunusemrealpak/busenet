@@ -11,3 +11,4 @@ export 'src/enums/http_types.dart';
 export 'src/configuration/network_configuration.dart';
 
 export 'src/dio/i_core_dio.dart';
+export 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
