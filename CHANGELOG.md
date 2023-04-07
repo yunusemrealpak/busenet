@@ -25,3 +25,12 @@
 ## 0.1.5
 
 * Update README.md
+
+## 0.1.6
+
+* Update README.md
+
+## 0.1.7
+
+* Added EmptyResponseModel
+* Added example
