@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.1.5
+  busenet: ^0.1.6
 ```
 
 ### Usage
@@ -29,12 +29,13 @@ import 'package:busenet/busenet.dart';
 
 #### Create a new Network Manager instance
 
-İki farklı proje için iki farklı response model örneği oluşturuyorum. İki modelimiz de BaseResponse dan miras almak zorunda.
+Let's create two different response model examples for two different projects. Both of our models must inherit from BaseResponse.
 
 BaseResponse
 ```dart
 abstract class BaseResponse<T> {
   int? statusCode;
+  String? errorMessage;
 
   T fromJson(Map<String, dynamic> json);
   void setData<R>(R entity);
@@ -131,8 +132,7 @@ class SecondResponseModel extends BaseResponse<SecondResponseModel> {
 }
 ```
 
-Şimdi bir instance oluşturalım. İki model için dataların set edileceği yerin property adını entityKey'e ekliyoruz. 
-
+Let's create an instance now. We are adding the property name where the data will be set for both models to entityKey.
 
 ```dart
 ...
@@ -155,6 +155,21 @@ INetworkManager manager = NetworkManager<SecondResponseModel>()
           cacheStoreKey: 'boilerplate_cache',
           entityKey: 'body',
         );
+...
+```
+
+###### Important Note:
+
+If you don't have a custom response model architecture for your project, you can create an instance using EmptyResponseModel. Please take a look at the example project.
+
+```dart
+,,,
+INetworkManager manager = NetworkManager<EmptyResponseModel>()
+      ..initialize(
+        NetworkConfiguration('https://jsonplaceholder.typicode.com'),
+        responseModel: EmptyResponseModel(),
+        cacheStoreKey: 'example-cache',
+      );
 ...
 ```
 

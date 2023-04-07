@@ -1,6 +1,6 @@
 name: busenet
-description: A new Flutter network package.
-version: 0.1.5
+description: Busenet package is a network package built on top of Dio package. It's designed to be easily integrated into your projects and used quickly. You can perform request-based caching as you wish and assign any response model you want to your network instance in a generic way.
+version: 0.1.6
 homepage: 'https://github.com/yunusemrealpak/busenet'
 
 environment:

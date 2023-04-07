@@ -1,4 +1,3 @@
-
 enum HttpTypes {
   get('GET'),
   post('POST'),

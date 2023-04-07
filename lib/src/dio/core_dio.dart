@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:busenet/src/models/empty_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -13,9 +14,7 @@ import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
 
-class CoreDio<T extends BaseResponse<T>>
-    with DioMixin
-    implements Dio, ICoreDio<T> {
+class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<T> {
   late CacheOptions cacheOptions;
   late T responseModel;
   String? entityKey;
@@ -77,14 +76,16 @@ class CoreDio<T extends BaseResponse<T>>
         case HttpStatus.accepted:
         case HttpStatus
             .notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
-          responseModel =
-              responseModel.fromJson(response.data as Map<String, dynamic>);
 
           final entity = _parseBody<E, R>(
             response.data,
             model: parserModel,
             entityKey: entityKey,
           );
+
+          if (responseModel is! EmptyResponseModel) {
+            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          }
 
           responseModel.setData(entity);
           responseModel.statusCode = 1;
@@ -96,13 +97,13 @@ class CoreDio<T extends BaseResponse<T>>
         // //     .showDialog(message: model.errorMessage ?? '');
         // // return ResponseModel(statusCode: -1, data: {'message': ''});
         default:
-          responseModel =
-              responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
           responseModel.statusCode = response.statusCode;
           return responseModel;
       }
     } catch (e) {
       responseModel.statusCode = -1;
+      if (e is DioError) responseModel.errorMessage = e.message;
       return responseModel;
     }
   }

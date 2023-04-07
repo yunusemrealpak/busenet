@@ -1,3 +1,4 @@
+import 'package:busenet/src/models/empty_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
@@ -6,12 +7,15 @@ import 'package:path_provider/path_provider.dart';
 import 'configuration/network_configuration.dart';
 import 'dio/core_dio.dart';
 import 'dio/i_core_dio.dart';
+import 'enums/http_types.dart';
 import 'i_netwok_manager.dart';
+import 'models/base_entity.dart';
 import 'models/base_response.dart';
 
 class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
   late ICoreDio<T> dio;
   late HiveCacheStore cacheStore;
+  late T responseModel;
 
   @override
   Future<void> initialize(
@@ -58,6 +62,35 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
 
   @override
   ICoreDio<T> get coreDio => dio;
+
+  @override
+  Future<T> fetch<E extends BaseEntity<E>, R>(
+    String path, {
+    required E parserModel,
+    required HttpTypes type,
+    String contentType = Headers.jsonContentType,
+    ResponseType responseType = ResponseType.json,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    CachePolicy cachePolicy = CachePolicy.forceCache,
+    Duration maxStale = const Duration(minutes: 1),
+  }) async {
+    return await coreDio.send<E, R>(
+      path,
+      parserModel: parserModel,
+      type: type,
+      cachePolicy: cachePolicy,
+      cancelToken: cancelToken,
+      contentType: contentType,
+      data: data,
+      maxStale: maxStale,
+      onSendProgress: onSendProgress,
+      queryParameters: queryParameters,
+      responseType: responseType,
+    );
+  }
 
   @override
   void addHeader(Map<String, dynamic> value) {
