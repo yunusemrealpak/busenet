@@ -21,3 +21,7 @@
 ## 0.1.4
 
 * Update package name
+
+## 0.1.5
+
+* Update README.md
