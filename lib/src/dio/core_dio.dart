@@ -14,7 +14,9 @@ import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
 
-class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<T> {
+class CoreDio<T extends BaseResponse<T>>
+    with DioMixin
+    implements Dio, ICoreDio<T> {
   late CacheOptions cacheOptions;
   late T responseModel;
   String? entityKey;
@@ -84,7 +86,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
           );
 
           if (responseModel is! EmptyResponseModel) {
-            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+            responseModel =
+                responseModel.fromJson(response.data as Map<String, dynamic>);
           }
 
           responseModel.setData(entity);
@@ -97,7 +100,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
         // //     .showDialog(message: model.errorMessage ?? '');
         // // return ResponseModel(statusCode: -1, data: {'message': ''});
         default:
-          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel =
+              responseModel.fromJson(response.data as Map<String, dynamic>);
           responseModel.statusCode = response.statusCode;
           return responseModel;
       }

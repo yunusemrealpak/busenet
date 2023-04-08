@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.1.6
+  busenet: ^0.1.7
 ```
 
 ### Usage
@@ -166,7 +166,7 @@ If you don't have a custom response model architecture for your project, you can
 ,,,
 INetworkManager manager = NetworkManager<EmptyResponseModel>()
       ..initialize(
-        NetworkConfiguration('https://jsonplaceholder.typicode.com'),
+        NetworkConfiguration('<base-url>'),
         responseModel: EmptyResponseModel(),
         cacheStoreKey: 'example-cache',
       );

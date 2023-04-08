@@ -34,3 +34,8 @@
 
 * Added EmptyResponseModel
 * Added example
+
+## 0.1.7
+
+* Format classes
+* Update README.md

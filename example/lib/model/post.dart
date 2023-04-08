@@ -40,5 +40,6 @@ class Post extends BaseEntity<Post> {
 
   String toJson() => json.encode(toMap());
 
-  factory Post.fromJson(String source) => Post.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Post.fromJson(String source) =>
+      Post.fromMap(json.decode(source) as Map<String, dynamic>);
 }
