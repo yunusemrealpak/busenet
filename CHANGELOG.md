@@ -39,3 +39,8 @@
 
 * Format classes
 * Update README.md
+
+## 0.1.9
+
+* Added isLoggerEnabled
+* Update README.md

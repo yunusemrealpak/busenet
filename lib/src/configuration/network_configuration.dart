@@ -16,6 +16,7 @@
 ///
 /// [sendTimeout]: The maximum amount of time to wait for a request to be sent before giving up.
 ///
+/// [isLoggerEnabled]: Request logs is enabled or disabled
 /// ------------------------------------------------------------------
 ///
 ///  Türkçe:
@@ -33,15 +34,18 @@
 /// [receiveTimeout]: Bir yanıtın alınmasını beklemek için ayarlanan maksimum süre.
 ///
 /// [sendTimeout]: Bir isteğin gönderilmesini beklemek için ayarlanan maksimum süre.
+///
+/// [isLoggerEnabled]: İsteklerin logunu açık kapatır
 library;
 
 class NetworkConfiguration {
   String baseUrl;
   String? apiKey;
   int minimumValidateStatus;
-  Duration? connectTimeout;
-  Duration? receiveTimeout;
-  Duration? sendTimeout;
+  Duration connectTimeout;
+  Duration receiveTimeout;
+  Duration sendTimeout;
+  bool isLoggerEnabled;
 
   NetworkConfiguration(
     this.baseUrl, {
@@ -50,5 +54,6 @@ class NetworkConfiguration {
     this.receiveTimeout = const Duration(seconds: 5),
     this.sendTimeout = const Duration(seconds: 10),
     this.minimumValidateStatus = 400,
+    this.isLoggerEnabled = true,
   });
 }

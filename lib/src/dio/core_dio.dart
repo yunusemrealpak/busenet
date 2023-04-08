@@ -14,19 +14,19 @@ import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
 
-class CoreDio<T extends BaseResponse<T>>
-    with DioMixin
-    implements Dio, ICoreDio<T> {
+class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<T> {
   late CacheOptions cacheOptions;
   late T responseModel;
   String? entityKey;
+  late bool isLoggerEnabled;
 
   CoreDio(
     BaseOptions options,
     this.cacheOptions,
     this.responseModel,
-    this.entityKey,
-  ) {
+    this.entityKey, {
+    this.isLoggerEnabled = true,
+  }) {
     this.options = options;
     httpClientAdapter = IOHttpClientAdapter();
   }
@@ -67,11 +67,13 @@ class CoreDio<T extends BaseResponse<T>>
         cancelToken: cancelToken,
       );
 
-      customPrint(
-        fromWhere: 'CoreDio',
-        type: 'send - http statusCode',
-        data: '${response.statusCode} - ${DateTime.now()}',
-      );
+      if (isLoggerEnabled) {
+        customPrint(
+          fromWhere: 'CoreDio',
+          type: 'send - http statusCode',
+          data: '${response.statusCode} - ${DateTime.now()}',
+        );
+      }
 
       switch (response.statusCode) {
         case HttpStatus.ok:
@@ -86,8 +88,7 @@ class CoreDio<T extends BaseResponse<T>>
           );
 
           if (responseModel is! EmptyResponseModel) {
-            responseModel =
-                responseModel.fromJson(response.data as Map<String, dynamic>);
+            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
           }
 
           responseModel.setData(entity);
@@ -100,8 +101,7 @@ class CoreDio<T extends BaseResponse<T>>
         // //     .showDialog(message: model.errorMessage ?? '');
         // // return ResponseModel(statusCode: -1, data: {'message': ''});
         default:
-          responseModel =
-              responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
           responseModel.statusCode = response.statusCode;
           return responseModel;
       }
