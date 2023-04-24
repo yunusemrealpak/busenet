@@ -27,5 +27,7 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     /// Cache Options
     CachePolicy? cachePolicy,
     Duration? maxStale,
+
+    bool ignoreEntityKey = false,
   });
 }
