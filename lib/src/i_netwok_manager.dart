@@ -27,6 +27,7 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     void Function(int, int)? onSendProgress,
     CachePolicy cachePolicy = CachePolicy.forceCache,
     Duration maxStale = const Duration(minutes: 1),
+    bool ignoreEntityKey = false,
   });
 
   void addHeader(Map<String, dynamic> value);

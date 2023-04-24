@@ -75,6 +75,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     void Function(int, int)? onSendProgress,
     CachePolicy cachePolicy = CachePolicy.forceCache,
     Duration maxStale = const Duration(minutes: 1),
+    bool ignoreEntityKey = false,
   }) async {
     return await coreDio.send<E, R>(
       path,
@@ -88,6 +89,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       onSendProgress: onSendProgress,
       queryParameters: queryParameters,
       responseType: responseType,
+      ignoreEntityKey: ignoreEntityKey,
     );
   }
 
