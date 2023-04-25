@@ -52,3 +52,7 @@
 ## 0.2.1
 
 * ignore entity key in request fix
+
+## 0.2.2
+
+* auth token fix
