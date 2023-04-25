@@ -44,3 +44,7 @@
 
 * Added isLoggerEnabled
 * Update README.md
+
+## 0.2.0
+
+* Added ignore entity key in request
