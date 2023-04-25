@@ -129,7 +129,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
 
   @override
   void addAuthorizationHeader(String token) {
-    options.headers.addAll({'Authorization: Bearer ': token});
+    options.headers.addAll({'Authorization': 'Bearer $token'});
   }
 
   @override
