@@ -48,3 +48,7 @@
 ## 0.2.0
 
 * Added ignore entity key in request
+
+## 0.2.1
+
+* ignore entity key in request fix

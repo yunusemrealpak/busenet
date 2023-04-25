@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.1.9
+  busenet: ^0.2.1
 ```
 
 ### Usage

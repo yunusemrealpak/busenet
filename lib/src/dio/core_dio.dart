@@ -46,7 +46,6 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
     /// Cache Options
     CachePolicy? cachePolicy,
     Duration? maxStale,
-
     bool ignoreEntityKey = false,
   }) async {
     try {
@@ -86,14 +85,18 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
           final entity = _parseBody<E, R>(
             response.data,
             model: parserModel,
-            entityKey: ignoreEntityKey ? null : entityKey,
+            entityKey: entityKey,
           );
 
           if (responseModel is! EmptyResponseModel) {
             responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
           }
 
-          responseModel.setData(entity);
+          if (ignoreEntityKey) {
+            responseModel.setData(response.data);
+          } else {
+            responseModel.setData(entity);
+          }
           responseModel.statusCode = 1;
 
           return responseModel;

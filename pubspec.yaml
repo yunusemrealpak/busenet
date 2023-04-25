@@ -1,6 +1,6 @@
 name: busenet
 description: Busenet is a network package that uses Dio underneath. It allows easy integration and quick usage, with request-based caching and generic response model assignment.
-version: 0.2.0
+version: 0.2.1
 homepage: 'https://github.com/yunusemrealpak/busenet'
 
 environment:
