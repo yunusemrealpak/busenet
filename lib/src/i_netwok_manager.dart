@@ -9,7 +9,7 @@ import 'models/base_response.dart';
 
 abstract class INetworkManager<T extends BaseResponse<T>> {
   ICoreDio get coreDio;
-  void initialize(
+  Future<void> initialize(
     NetworkConfiguration configuration, {
     required T responseModel,
     String? entityKey,

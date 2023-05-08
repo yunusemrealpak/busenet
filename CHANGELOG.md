@@ -56,3 +56,7 @@
 ## 0.2.2
 
 * auth token fix
+
+## 0.3.0
+
+* network manager init fix

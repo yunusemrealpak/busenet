@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.2.2
+  busenet: ^0.3.0
 ```
 
 ### Usage
@@ -183,6 +183,7 @@ final response = await manager.fetch<SamplePostModel, SamplePostModel>(
       type: HttpTypes.get,
       cachePolicy: CachePolicy.forceCache, // optional - defaults to CachePolicy.noCache
       maxStale: const Duration(seconds: 10), // optional - defaults to 10 seconds if cachePolicy is CachePolicy.forceCache
+      ignoreEntityKey: true, // optional - defaults to false  -> if true, the data will not be set to the entityKey property of the response model
     ) as SampleResponseModel;
 
     switch (response.statusCode) {
