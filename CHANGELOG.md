@@ -61,6 +61,10 @@
 
 * network manager init fix
 
-## 0.3.1
+## 0.4.0
 
 * Added custom entity key to request
+
+## 0.4.1
+
+* network manager fetch fix

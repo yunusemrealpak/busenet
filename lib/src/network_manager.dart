@@ -76,6 +76,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     CachePolicy cachePolicy = CachePolicy.forceCache,
     Duration maxStale = const Duration(minutes: 1),
     bool ignoreEntityKey = false,
+    String? insideEntityKey,
   }) async {
     return await coreDio.send<E, R>(
       path,
@@ -90,6 +91,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       queryParameters: queryParameters,
       responseType: responseType,
       ignoreEntityKey: ignoreEntityKey,
+      insideEntityKey: insideEntityKey,
     );
   }
 
