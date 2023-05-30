@@ -60,3 +60,7 @@
 ## 0.3.0
 
 * network manager init fix
+
+## 0.3.1
+
+* Added custom entity key to request

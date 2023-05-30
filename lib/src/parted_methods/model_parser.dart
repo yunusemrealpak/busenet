@@ -4,11 +4,16 @@ R? _parseBody<T extends BaseEntity<T>, R>(
   dynamic responseBody, {
   required T model,
   String? entityKey,
+  String? insideEntityKey,
 }) {
   dynamic data = responseBody;
 
   if (entityKey != null) {
     data = responseBody[entityKey];
+  }
+
+  if (entityKey != null && insideEntityKey != null) {
+    data = data[insideEntityKey];
   }
 
   if (data == null) {

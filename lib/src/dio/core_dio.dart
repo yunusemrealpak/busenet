@@ -46,7 +46,10 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
     /// Cache Options
     CachePolicy? cachePolicy,
     Duration? maxStale,
+
+    // Entity Options
     bool ignoreEntityKey = false,
+    String? insideEntityKey,
   }) async {
     try {
       final response = await request<dynamic>(
@@ -80,12 +83,13 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
         case HttpStatus.ok:
         case HttpStatus.accepted:
         case HttpStatus
-            .notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
+              .notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
 
           final entity = _parseBody<E, R>(
             response.data,
             model: parserModel,
             entityKey: entityKey,
+            insideEntityKey: insideEntityKey,
           );
 
           if (responseModel is! EmptyResponseModel) {

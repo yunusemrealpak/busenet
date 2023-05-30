@@ -28,6 +28,8 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     CachePolicy? cachePolicy,
     Duration? maxStale,
 
+    // Entity Options
     bool ignoreEntityKey = false,
+    String? insideEntityKey,
   });
 }
