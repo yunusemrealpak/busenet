@@ -1,4 +1,4 @@
-import 'package:busenet/busenet.dart';
+import 'package:dio/dio.dart';
 
 abstract class BaseResponse<T> {
   int? statusCode;

@@ -14,4 +14,5 @@ export 'src/configuration/network_configuration.dart';
 export 'src/dio/i_core_dio.dart';
 
 export 'package:dio/dio.dart';
+export 'package:dio/src/dio_exception.dart';
 export 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
