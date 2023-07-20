@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:busenet/src/models/empty_response_model.dart';
+import 'package:busenet/src/models/failure.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -13,6 +14,7 @@ import '../utility/helper_functions.dart';
 import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
+part '../parted_methods/error_handler.dart';
 
 class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<T> {
   late CacheOptions cacheOptions;
@@ -103,11 +105,14 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
           responseModel.statusCode = 1;
 
           return responseModel;
-        // case 401:
-        //   final model = ResponseModel.fromJson(response.data);
-        // // await di<DialogService>()
-        // //     .showDialog(message: model.errorMessage ?? '');
-        // // return ResponseModel(statusCode: -1, data: {'message': ''});
+        case 401:
+          final model = responseModel.fromJson(response.data);
+          model.errorType = UnAuthorizedFailure();
+          return model;
+        case 404:
+          final model = responseModel.fromJson(response.data);
+          model.errorType = NotFoundFailure();
+          return model;
         default:
           responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
           responseModel.statusCode = response.statusCode;
@@ -115,7 +120,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
       }
     } catch (e) {
       responseModel.statusCode = -1;
-      if (e is DioExceptionType) responseModel.errorType = e;
+      if (e is DioExceptionType) responseModel.errorType = handleError(e);
       return responseModel;
     }
   }

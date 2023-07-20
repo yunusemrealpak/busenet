@@ -73,3 +73,7 @@
 
 * added dio exception type to base response model
 * remove default values from network configurations' timeouts
+
+## 0.6.0
+
+* added failures

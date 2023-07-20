@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
+import 'package:busenet/src/models/failure.dart';
 
 abstract class BaseResponse<T> {
   int? statusCode;
   String? errorMessage;
-  DioExceptionType? errorType;
+  Failure? errorType;
 
   T fromJson(Map<String, dynamic> json);
   void setData<R>(R entity);
