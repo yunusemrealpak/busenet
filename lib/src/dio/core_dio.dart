@@ -82,8 +82,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
       switch (response.statusCode) {
         case HttpStatus.ok:
         case HttpStatus.accepted:
-        case HttpStatus
-              .notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
+        case HttpStatus.notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
 
           final entity = _parseBody<E, R>(
             response.data,
@@ -116,7 +115,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
       }
     } catch (e) {
       responseModel.statusCode = -1;
-      if (e is DioError) responseModel.errorMessage = e.message;
+      if (e is DioExceptionType) responseModel.errorType = e;
       return responseModel;
     }
   }

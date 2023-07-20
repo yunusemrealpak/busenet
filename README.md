@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.4.0
+  busenet: ^0.5.0
 ```
 
 ### Usage
@@ -36,6 +36,7 @@ BaseResponse
 abstract class BaseResponse<T> {
   int? statusCode;
   String? errorMessage;
+  DioExceptionType? errorType;
 
   T fromJson(Map<String, dynamic> json);
   void setData<R>(R entity);

@@ -68,3 +68,8 @@
 ## 0.4.1
 
 * network manager fetch fix
+
+## 0.5.0
+
+* added dio exception type to base response model
+* remove default values from network configurations' timeouts

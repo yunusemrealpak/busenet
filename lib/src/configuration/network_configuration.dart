@@ -42,17 +42,17 @@ class NetworkConfiguration {
   String baseUrl;
   String? apiKey;
   int minimumValidateStatus;
-  Duration connectTimeout;
-  Duration receiveTimeout;
-  Duration sendTimeout;
+  Duration? connectTimeout;
+  Duration? receiveTimeout;
+  Duration? sendTimeout;
   bool isLoggerEnabled;
 
   NetworkConfiguration(
     this.baseUrl, {
     this.apiKey,
-    this.connectTimeout = const Duration(seconds: 10),
-    this.receiveTimeout = const Duration(seconds: 5),
-    this.sendTimeout = const Duration(seconds: 10),
+    this.connectTimeout,
+    this.receiveTimeout,
+    this.sendTimeout,
     this.minimumValidateStatus = 400,
     this.isLoggerEnabled = true,
   });
