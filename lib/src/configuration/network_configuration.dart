@@ -38,6 +38,8 @@
 /// [isLoggerEnabled]: İsteklerin logunu açık kapatır
 library;
 
+import 'package:busenet/busenet.dart';
+
 class NetworkConfiguration {
   String baseUrl;
   String? apiKey;
@@ -46,6 +48,7 @@ class NetworkConfiguration {
   Duration? receiveTimeout;
   Duration? sendTimeout;
   bool isLoggerEnabled;
+  ErrorMessages? errorMessages;
 
   NetworkConfiguration(
     this.baseUrl, {
@@ -55,5 +58,6 @@ class NetworkConfiguration {
     this.sendTimeout,
     this.minimumValidateStatus = 400,
     this.isLoggerEnabled = true,
+    this.errorMessages,
   });
 }

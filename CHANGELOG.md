@@ -77,3 +77,7 @@
 ## 0.6.0
 
 * added failures
+
+## 0.6.1
+
+* added error messages

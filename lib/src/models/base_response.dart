@@ -1,4 +1,4 @@
-import 'package:busenet/src/models/failure.dart';
+import 'failure/failure.dart';
 
 abstract class BaseResponse<T> {
   int? statusCode;

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:busenet/src/models/empty_response_model.dart';
-import 'package:busenet/src/models/failure.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -9,6 +8,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import '../enums/http_types.dart';
 import '../models/base_entity.dart';
 import '../models/base_response.dart';
+import '../models/failure/failure.dart';
 import '../models/no_result_response.dart';
 import '../utility/helper_functions.dart';
 import 'i_core_dio.dart';
@@ -120,7 +120,11 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
       }
     } catch (e) {
       responseModel.statusCode = -1;
-      if (e is DioExceptionType) responseModel.errorType = handleError(e);
+      if (e is DioExceptionType) {
+        responseModel.errorType = handleError(e);
+      } else {
+        responseModel.errorType = UnknownFailure();
+      }
       return responseModel;
     }
   }
