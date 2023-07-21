@@ -103,11 +103,11 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
           return responseModel;
         case 401:
           final model = responseModel.fromJson(response.data);
-          model.errorType = UnAuthorizedFailure();
+          model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
           return model;
         case 404:
           final model = responseModel.fromJson(response.data);
-          model.errorType = NotFoundFailure();
+          model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
           return model;
         default:
           responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
