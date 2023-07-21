@@ -38,7 +38,7 @@
 /// [isLoggerEnabled]: İsteklerin logunu açık kapatır
 library;
 
-import 'package:busenet/busenet.dart';
+import '../models/failure/error_messages.dart';
 
 class NetworkConfiguration {
   String baseUrl;

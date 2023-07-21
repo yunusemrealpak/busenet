@@ -1,19 +1,19 @@
 part of '../dio/core_dio.dart';
 
-Failure handleError(DioExceptionType errorType) {
+Failure handleError(DioExceptionType errorType, ErrorMessages? errorMessages) {
   switch (errorType) {
     case DioExceptionType.connectionTimeout:
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
-      return TimeoutFailure();
+      return TimeoutFailure(message: errorMessages?.timeoutErrorMessage);
     case DioExceptionType.connectionError:
-      return ConnectionFailure();
+      return ConnectionFailure(message: errorMessages?.connectionErrorMessage);
     case DioExceptionType.badCertificate:
     case DioExceptionType.badResponse:
-      return ServerFailure();
+      return ServerFailure(message: errorMessages?.serverErrorMessage);
     case DioExceptionType.cancel:
-      return CancelFailure();
+      return CancelFailure(message: errorMessages?.cancelErrorMessage);
     case DioExceptionType.unknown:
-      return UnknownFailure();
+      return UnknownFailure(message: errorMessages?.unknownErrorMessage);
   }
 }

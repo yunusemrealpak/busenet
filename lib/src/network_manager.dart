@@ -55,8 +55,14 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       },
     );
 
-    dio = CoreDio<T>(baseOptions, cacheOptions, responseModel, entityKey)
-      ..addInterceptor(DioCacheInterceptor(options: cacheOptions));
+    dio = CoreDio<T>(
+      baseOptions,
+      cacheOptions,
+      responseModel,
+      entityKey,
+      errorMessages: configuration.errorMessages,
+      isLoggerEnabled: configuration.isLoggerEnabled,
+    )..addInterceptor(DioCacheInterceptor(options: cacheOptions));
   }
 
   @override

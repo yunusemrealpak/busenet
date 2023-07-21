@@ -81,3 +81,7 @@
 ## 0.6.1
 
 * added error messages
+
+## 0.6.1
+
+* send error messages to error handler method

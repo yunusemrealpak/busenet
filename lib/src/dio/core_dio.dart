@@ -1,17 +1,9 @@
 import 'dart:io';
 
-import 'package:busenet/src/models/empty_response_model.dart';
-import 'package:dio/dio.dart';
+import 'package:busenet/busenet.dart';
 import 'package:dio/io.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
-import '../enums/http_types.dart';
-import '../models/base_entity.dart';
-import '../models/base_response.dart';
-import '../models/failure/failure.dart';
-import '../models/no_result_response.dart';
 import '../utility/helper_functions.dart';
-import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
 part '../parted_methods/error_handler.dart';
@@ -22,13 +14,9 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
   String? entityKey;
   late bool isLoggerEnabled;
 
-  CoreDio(
-    BaseOptions options,
-    this.cacheOptions,
-    this.responseModel,
-    this.entityKey, {
-    this.isLoggerEnabled = true,
-  }) {
+  ErrorMessages? errorMessages;
+
+  CoreDio(BaseOptions options, this.cacheOptions, this.responseModel, this.entityKey, {this.isLoggerEnabled = true, this.errorMessages}) {
     this.options = options;
     httpClientAdapter = IOHttpClientAdapter();
   }
@@ -103,7 +91,6 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
             responseModel.setData(entity);
           }
           responseModel.statusCode = 1;
-
           return responseModel;
         case 401:
           final model = responseModel.fromJson(response.data);
@@ -118,10 +105,10 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
           responseModel.statusCode = response.statusCode;
           return responseModel;
       }
-    } catch (e) {
+    } catch (error) {
       responseModel.statusCode = -1;
-      if (e is DioExceptionType) {
-        responseModel.errorType = handleError(e);
+      if (error is DioExceptionType) {
+        responseModel.errorType = handleError(error, errorMessages);
       } else {
         responseModel.errorType = UnknownFailure();
       }
