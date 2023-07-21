@@ -1,9 +1,18 @@
 import 'dart:io';
 
-import 'package:busenet/busenet.dart';
+import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
+import '../enums/http_types.dart';
+import '../models/base_entity.dart';
+import '../models/base_response.dart';
+import '../models/empty_response_model.dart';
+import '../models/failure/error_messages.dart';
+import '../models/failure/failure.dart';
+import '../models/no_result_response.dart';
 import '../utility/helper_functions.dart';
+import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
 part '../parted_methods/error_handler.dart';

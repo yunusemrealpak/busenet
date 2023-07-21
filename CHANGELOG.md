@@ -82,6 +82,10 @@
 
 * added error messages
 
-## 0.6.1
+## 0.6.2
 
 * send error messages to error handler method
+
+## 0.6.3
+
+* fixed imports
