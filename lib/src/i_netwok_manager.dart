@@ -25,8 +25,8 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
-    CachePolicy cachePolicy = CachePolicy.forceCache,
-    Duration maxStale = const Duration(minutes: 1),
+    CachePolicy cachePolicy = CachePolicy.noCache,
+    Duration? maxStale,
     bool ignoreEntityKey = false,
     String? insideEntityKey,
   });
