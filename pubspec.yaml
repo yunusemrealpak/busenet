@@ -1,10 +1,10 @@
 name: busenet
 description: Busenet is a network package that uses Dio underneath. It allows easy integration and quick usage, with request-based caching and generic response model assignment.
-version: 0.7.0
+version: 0.7.0+1
 homepage: 'https://github.com/yunusemrealpak/busenet'
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

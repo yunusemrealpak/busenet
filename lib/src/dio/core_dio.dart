@@ -17,7 +17,7 @@ import 'i_core_dio.dart';
 part '../parted_methods/model_parser.dart';
 part '../parted_methods/error_handler.dart';
 
-class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<T> {
+class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   late CacheOptions cacheOptions;
   late T responseModel;
   String? entityKey;
