@@ -89,3 +89,8 @@
 ## 0.6.3
 
 * fixed imports
+
+## 0.7.0
+
+* fixed no result response
+* added fetch primitive

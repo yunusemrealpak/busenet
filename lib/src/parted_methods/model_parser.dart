@@ -6,6 +6,10 @@ R? _parseBody<T extends BaseEntity<T>, R>(
   String? entityKey,
   String? insideEntityKey,
 }) {
+  if (R is NoResultResponse || R == NoResultResponse) {
+    return NoResultResponse() as R;
+  }
+
   dynamic data = responseBody;
 
   if (entityKey != null) {
@@ -31,22 +35,54 @@ R? _parseBody<T extends BaseEntity<T>, R>(
     } else if (data is Map<String, dynamic>) {
       return model.fromJson(data) as R;
     } else {
-      if (R is NoResultResponse || R == NoResultResponse) {
-        return NoResultResponse() as R;
-      } else {
-        customPrint(
-          fromWhere: 'Network Layer',
-          type: '_parseBody',
-          data: 'Be careful your data $data, I could not parse it',
-        );
-        return null;
-      }
+      customPrint(
+        fromWhere: 'Network Layer',
+        type: '_parseBody',
+        data: 'Be careful your data $data, I could not parse it',
+      );
+      return null;
     }
   } catch (e) {
     customPrint(
       fromWhere: 'Network Layer',
       type: '_parseBody',
       data: 'Parse Error: $e - response body: $data T model: $T , R model: $R ',
+    );
+  }
+  return null;
+}
+
+T? _parseBodyPrimitive<T>(
+  dynamic responseBody, {
+  String? entityKey,
+  String? insideEntityKey,
+}) {
+  dynamic data = responseBody;
+
+  if (entityKey != null) {
+    data = responseBody[entityKey];
+  }
+
+  if (entityKey != null && insideEntityKey != null) {
+    data = data[insideEntityKey];
+  }
+
+  if (data == null) {
+    customPrint(
+      fromWhere: 'Network Layer',
+      type: '_parseBody',
+      data: 'Be careful your data $data, Cannot be null',
+    );
+    return null;
+  }
+
+  try {
+    return data as T?;
+  } catch (e) {
+    customPrint(
+      fromWhere: 'Network Layer',
+      type: '_parseBody',
+      data: 'Parse Error: $e - response body: $data T model primitive: $T',
     );
   }
   return null;

@@ -126,6 +126,99 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements Dio, ICoreDio<
   }
 
   @override
+  Future<T> sendPrimitive<E>(
+    String path, {
+    required HttpTypes type,
+    String contentType = Headers.jsonContentType,
+    ResponseType responseType = ResponseType.json,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+
+    /// Cache Options
+    CachePolicy? cachePolicy,
+    Duration? maxStale,
+
+    // Entity Options
+    bool ignoreEntityKey = false,
+    String? insideEntityKey,
+  }) async {
+    try {
+      final response = await request<dynamic>(
+        path,
+        data: data,
+        options: cacheOptions
+            .copyWith(
+              policy: cachePolicy,
+              maxStale: Nullable<Duration>(maxStale),
+            )
+            .toOptions()
+            .copyWith(
+              method: type.value,
+              contentType: contentType,
+              responseType: responseType,
+            ),
+        queryParameters: queryParameters,
+        onSendProgress: onSendProgress,
+        cancelToken: cancelToken,
+      );
+
+      if (isLoggerEnabled) {
+        customPrint(
+          fromWhere: 'CoreDio',
+          type: 'send - http statusCode',
+          data: '${response.statusCode} - ${DateTime.now()}',
+        );
+      }
+
+      switch (response.statusCode) {
+        case HttpStatus.ok:
+        case HttpStatus.accepted:
+        case HttpStatus.notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
+
+          final entity = _parseBodyPrimitive<E>(
+            response.data,
+            entityKey: entityKey,
+            insideEntityKey: insideEntityKey,
+          );
+
+          if (responseModel is! EmptyResponseModel) {
+            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          }
+
+          if (ignoreEntityKey) {
+            responseModel.setData(response.data);
+          } else {
+            responseModel.setData(entity);
+          }
+          responseModel.statusCode = 1;
+          return responseModel;
+        case 401:
+          final model = responseModel.fromJson(response.data);
+          model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
+          return model;
+        case 404:
+          final model = responseModel.fromJson(response.data);
+          model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
+          return model;
+        default:
+          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel.statusCode = response.statusCode;
+          return responseModel;
+      }
+    } catch (error) {
+      responseModel.statusCode = -1;
+      if (error is DioExceptionType) {
+        responseModel.errorType = handleError(error, errorMessages);
+      } else {
+        responseModel.errorType = UnknownFailure();
+      }
+      return responseModel;
+    }
+  }
+
+  @override
   void addHeader(Map<String, dynamic> value) {
     options.headers.addAll(value);
   }

@@ -32,4 +32,23 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     bool ignoreEntityKey = false,
     String? insideEntityKey,
   });
+
+  Future<T> sendPrimitive<E>(
+    String path, {
+    required HttpTypes type,
+    String contentType = Headers.jsonContentType,
+    ResponseType responseType = ResponseType.json,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+
+    /// Cache Options
+    CachePolicy? cachePolicy,
+    Duration? maxStale,
+
+    // Entity Options
+    bool ignoreEntityKey = false,
+    String? insideEntityKey,
+  });
 }
