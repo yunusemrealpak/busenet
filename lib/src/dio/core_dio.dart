@@ -74,7 +74,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         customPrint(
           fromWhere: 'CoreDio',
           type: 'send - http statusCode',
-          data: '${response.statusCode} - ${DateTime.now()}',
+          data: '$path ${response.statusCode} - ${DateTime.now()}',
         );
       }
 
