@@ -242,4 +242,11 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   void addInterceptor(Interceptor interceptor) {
     interceptors.add(interceptor);
   }
+
+  @override
+  Future<Response> download(String urlPath, savePath,
+      {ProgressCallback? onReceiveProgress, Map<String, dynamic>? queryParameters, CancelToken? cancelToken, bool deleteOnError = true, String lengthHeader = Headers.contentLengthHeader, Object? data, Options? options}) {
+    // TODO: implement download
+    throw UnimplementedError();
+  }
 }
