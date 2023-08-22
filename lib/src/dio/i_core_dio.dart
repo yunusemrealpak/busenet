@@ -4,6 +4,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import '../enums/http_types.dart';
 import '../models/base_entity.dart';
 import '../models/base_response.dart';
+import '../utility/typedefs.dart';
 
 abstract class ICoreDio<T extends BaseResponse<T>> {
   void addHeader(Map<String, dynamic> value);
@@ -56,6 +57,7 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
   Future<Response> downloadFile(
     String urlPath, {
     ProgressCallback? onReceiveProgress,
+    ProgressPercentageCallback? onReceiveProgressPercentage,
     CancelToken? cancelToken,
     Map<String, dynamic>? queryParameters,
     String lengthHeader = Headers.contentLengthHeader,

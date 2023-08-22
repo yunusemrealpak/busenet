@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
@@ -40,12 +41,13 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       baseOptions.headers['apiKey'] = configuration.apiKey;
     }
 
+    final dirr = await getTemporaryDirectory();
+
     // Download Directory
-    String downloadPath = configuration.downloadPath ?? (await getTemporaryDirectory()).path;
+    String downloadPath = configuration.downloadPath ?? dirr.path;
     if (downloadPath.endsWith('/')) {
       downloadPath = downloadPath.substring(0, downloadPath.length - 1);
     }
-    // check if downloadPath/busenet exists
     final downloadFolderPath = '$downloadPath/${configuration.downloadFolder}';
     final exists = await Directory(downloadFolderPath).exists();
     if (!exists) {
@@ -53,9 +55,8 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     }
 
     // Cache
-    final cacheDir = await getTemporaryDirectory();
     cacheStore = HiveCacheStore(
-      cacheDir.path,
+      dirr.path,
       hiveBoxName: cacheStoreKey ?? 'network_cache',
     );
 
@@ -145,6 +146,25 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       responseType: responseType,
       ignoreEntityKey: ignoreEntityKey,
       insideEntityKey: insideEntityKey,
+    );
+  }
+
+  @override
+  Future<Response<dynamic>> downloadFile(
+    String urlPath, {
+    ProgressCallback? onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    ProgressPercentageCallback? onReceiveProgressPercentage,
+    CancelToken? cancelToken,
+    String lengthHeader = Headers.contentLengthHeader,
+  }) async {
+    return coreDio.downloadFile(
+      urlPath,
+      onReceiveProgress: onReceiveProgress,
+      onReceiveProgressPercentage: onReceiveProgressPercentage,
+      queryParameters: queryParameters,
+      cancelToken: cancelToken,
+      lengthHeader: lengthHeader,
     );
   }
 
