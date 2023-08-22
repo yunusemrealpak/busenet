@@ -246,18 +246,35 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   }
 
   @override
-  Future<Response> downloadFile(
+  Future<File> downloadFile(
     String urlPath, {
     ProgressCallback? onReceiveProgress,
     Map<String, dynamic>? queryParameters,
     ProgressPercentageCallback? onReceiveProgressPercentage,
     CancelToken? cancelToken,
-    String lengthHeader = Headers.contentLengthHeader,
-  }) {
-    assert(onReceiveProgress != null && onReceiveProgressPercentage == null, 'You can not use both onReceiveProgress and onReceiveProgressPercentage');
-    return download(
+  }) async {
+    // find file extension from urlPath
+    final list = urlPath.split('/');
+    if (list.isEmpty) {
+      throw Exception('File extension not found');
+    }
+
+    final fileName = list.last;
+
+    final extension = fileName.split('.');
+    if (extension.isEmpty) {
+      throw Exception('File extension not found');
+    }
+
+    final filePath = "$downloadPath/$fileName";
+
+    final response = await get(
       urlPath,
-      downloadPath,
+      queryParameters: queryParameters,
+      cancelToken: cancelToken,
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
       onReceiveProgress: (received, total) {
         if (onReceiveProgress != null) {
           onReceiveProgress(received, total);
@@ -266,9 +283,14 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
 
         onReceiveProgressPercentage?.call(received / total);
       },
-      queryParameters: queryParameters,
-      cancelToken: cancelToken,
-      lengthHeader: lengthHeader,
     );
+
+    final file = File(filePath);
+    var fs = file.openSync(mode: FileMode.write);
+    fs.writeFromSync(response.data);
+
+    await fs.close();
+
+    return file;
   }
 }

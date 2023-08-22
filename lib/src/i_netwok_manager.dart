@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -47,13 +49,12 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     String? insideEntityKey,
   });
 
-  Future<Response<dynamic>> downloadFile(
+  Future<File> downloadFile(
     String urlPath, {
     ProgressCallback? onReceiveProgress,
     Map<String, dynamic>? queryParameters,
     ProgressPercentageCallback? onReceiveProgressPercentage,
     CancelToken? cancelToken,
-    String lengthHeader = Headers.contentLengthHeader,
   });
 
   void addHeader(Map<String, dynamic> value);

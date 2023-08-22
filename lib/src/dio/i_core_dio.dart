@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
@@ -54,12 +56,11 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
   });
 
   // download file from url
-  Future<Response> downloadFile(
+  Future<File> downloadFile(
     String urlPath, {
     ProgressCallback? onReceiveProgress,
     ProgressPercentageCallback? onReceiveProgressPercentage,
     CancelToken? cancelToken,
     Map<String, dynamic>? queryParameters,
-    String lengthHeader = Headers.contentLengthHeader,
   });
 }

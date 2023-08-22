@@ -150,21 +150,19 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
   }
 
   @override
-  Future<Response<dynamic>> downloadFile(
+  Future<File> downloadFile(
     String urlPath, {
     ProgressCallback? onReceiveProgress,
     Map<String, dynamic>? queryParameters,
     ProgressPercentageCallback? onReceiveProgressPercentage,
     CancelToken? cancelToken,
-    String lengthHeader = Headers.contentLengthHeader,
-  }) async {
+  }) {
     return coreDio.downloadFile(
       urlPath,
       onReceiveProgress: onReceiveProgress,
       onReceiveProgressPercentage: onReceiveProgressPercentage,
       queryParameters: queryParameters,
       cancelToken: cancelToken,
-      lengthHeader: lengthHeader,
     );
   }
 
