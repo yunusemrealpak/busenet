@@ -16,7 +16,7 @@ Add the following dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  busenet: ^0.6.3
+  busenet: <latest-version>
 ```
 
 ### Usage
@@ -181,6 +181,27 @@ INetworkManager manager = NetworkManager<EmptyResponseModel>()
 final response = await manager.fetch<SamplePostModel, SamplePostModel>(
       '${NetworkPaths.getSamplePost}/1',
       parserModel: const SamplePostModel(),
+      type: HttpTypes.get,
+      cachePolicy: CachePolicy.forceCache, // optional - defaults to CachePolicy.noCache
+      maxStale: const Duration(seconds: 10), // optional - defaults to 10 seconds if cachePolicy is CachePolicy.forceCache
+      ignoreEntityKey: true, // optional - defaults to false  -> if true, the data will not be set to the entityKey property of the response model
+    ) as SampleResponseModel;
+
+    switch (response.statusCode) {
+      case 1:
+        return response.data as SamplePostModel;
+      default:
+        return null;
+    }
+...
+```
+
+#### Make a primitive request
+
+```dart
+...
+final response = await manager.fetchPrimitive<String, List<String>>(
+      '<sample-url>',
       type: HttpTypes.get,
       cachePolicy: CachePolicy.forceCache, // optional - defaults to CachePolicy.noCache
       maxStale: const Duration(seconds: 10), // optional - defaults to 10 seconds if cachePolicy is CachePolicy.forceCache

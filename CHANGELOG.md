@@ -94,3 +94,7 @@
 
 * fixed no result response
 * added fetch primitive
+
+## 0.7.1
+
+* updated network manager for fetch primitive
