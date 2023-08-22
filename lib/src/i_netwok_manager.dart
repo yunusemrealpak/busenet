@@ -31,6 +31,21 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     String? insideEntityKey,
   });
 
+  Future<T> fetchPrimitive<E, R>(
+    String path, {
+    required HttpTypes type,
+    String contentType = Headers.jsonContentType,
+    ResponseType responseType = ResponseType.json,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    CachePolicy cachePolicy = CachePolicy.noCache,
+    Duration? maxStale,
+    bool ignoreEntityKey = false,
+    String? insideEntityKey,
+  });
+
   void addHeader(Map<String, dynamic> value);
   void addAuthorizationHeader(String token);
   void removeHeader(String key);

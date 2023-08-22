@@ -102,6 +102,37 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
   }
 
   @override
+  Future<T> fetchPrimitive<E, R>(
+    String path, {
+    required HttpTypes type,
+    String contentType = Headers.jsonContentType,
+    ResponseType responseType = ResponseType.json,
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    CachePolicy cachePolicy = CachePolicy.noCache,
+    Duration? maxStale,
+    bool ignoreEntityKey = false,
+    String? insideEntityKey,
+  }) async {
+    return await coreDio.sendPrimitive<E, R>(
+      path,
+      type: type,
+      cachePolicy: cachePolicy,
+      cancelToken: cancelToken,
+      contentType: contentType,
+      data: data,
+      maxStale: maxStale,
+      onSendProgress: onSendProgress,
+      queryParameters: queryParameters,
+      responseType: responseType,
+      ignoreEntityKey: ignoreEntityKey,
+      insideEntityKey: insideEntityKey,
+    );
+  }
+
+  @override
   void addHeader(Map<String, dynamic> value) {
     coreDio.addHeader(value);
   }
