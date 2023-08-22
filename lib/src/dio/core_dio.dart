@@ -281,7 +281,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
           return;
         }
 
-        onReceiveProgressPercentage?.call(received / total);
+        onReceiveProgressPercentage?.call(convertToPercentile(received / total));
       },
     );
 
