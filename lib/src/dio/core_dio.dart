@@ -12,6 +12,7 @@ import '../models/failure/error_messages.dart';
 import '../models/failure/failure.dart';
 import '../models/no_result_response.dart';
 import '../utility/helper_functions.dart';
+import '../utility/typedefs.dart';
 import 'i_core_dio.dart';
 
 part '../parted_methods/model_parser.dart';
@@ -22,10 +23,11 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   late T responseModel;
   String? entityKey;
   late bool isLoggerEnabled;
+  late String downloadPath;
 
   ErrorMessages? errorMessages;
 
-  CoreDio(BaseOptions options, this.cacheOptions, this.responseModel, this.entityKey, {this.isLoggerEnabled = true, this.errorMessages}) {
+  CoreDio(BaseOptions options, this.cacheOptions, this.responseModel, this.entityKey, this.downloadPath, {this.isLoggerEnabled = true, this.errorMessages}) {
     this.options = options;
     httpClientAdapter = IOHttpClientAdapter();
   }
@@ -244,9 +246,29 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   }
 
   @override
-  Future<Response> download(String urlPath, savePath,
-      {ProgressCallback? onReceiveProgress, Map<String, dynamic>? queryParameters, CancelToken? cancelToken, bool deleteOnError = true, String lengthHeader = Headers.contentLengthHeader, Object? data, Options? options}) {
-    // TODO: implement download
-    throw UnimplementedError();
+  Future<Response> downloadFile(
+    String urlPath, {
+    ProgressCallback? onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    ProgressPercentageCallback? onReceiveProgressPercentage,
+    CancelToken? cancelToken,
+    String lengthHeader = Headers.contentLengthHeader,
+  }) {
+    assert(onReceiveProgress != null && onReceiveProgressPercentage == null, 'You can not use both onReceiveProgress and onReceiveProgressPercentage');
+    return download(
+      urlPath,
+      downloadPath,
+      onReceiveProgress: (received, total) {
+        if (onReceiveProgress != null) {
+          onReceiveProgress(received, total);
+          return;
+        }
+
+        onReceiveProgressPercentage?.call(received / total);
+      },
+      queryParameters: queryParameters,
+      cancelToken: cancelToken,
+      lengthHeader: lengthHeader,
+    );
   }
 }

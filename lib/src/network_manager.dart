@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
@@ -38,6 +40,19 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       baseOptions.headers['apiKey'] = configuration.apiKey;
     }
 
+    // Download Directory
+    String downloadPath = configuration.downloadPath ?? (await getTemporaryDirectory()).path;
+    if (downloadPath.endsWith('/')) {
+      downloadPath = downloadPath.substring(0, downloadPath.length - 1);
+    }
+    // check if downloadPath/busenet exists
+    final downloadFolderPath = '$downloadPath/${configuration.downloadFolder}';
+    final exists = await Directory(downloadFolderPath).exists();
+    if (!exists) {
+      await Directory(downloadFolderPath).create(recursive: true);
+    }
+
+    // Cache
     final cacheDir = await getTemporaryDirectory();
     cacheStore = HiveCacheStore(
       cacheDir.path,
@@ -60,6 +75,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       cacheOptions,
       responseModel,
       entityKey,
+      downloadFolderPath,
       errorMessages: configuration.errorMessages,
       isLoggerEnabled: configuration.isLoggerEnabled,
     )..addInterceptor(DioCacheInterceptor(options: cacheOptions));

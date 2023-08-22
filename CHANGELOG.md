@@ -98,3 +98,7 @@
 ## 0.7.1
 
 * updated network manager for fetch primitive
+
+## 0.8.0
+
+* added download feature to network manager

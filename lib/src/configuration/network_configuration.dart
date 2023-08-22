@@ -43,6 +43,8 @@ import '../models/failure/error_messages.dart';
 class NetworkConfiguration {
   String baseUrl;
   String? apiKey;
+  String? downloadPath;
+  String downloadFolder;
   int minimumValidateStatus;
   Duration? connectTimeout;
   Duration? receiveTimeout;
@@ -53,6 +55,8 @@ class NetworkConfiguration {
   NetworkConfiguration(
     this.baseUrl, {
     this.apiKey,
+    this.downloadPath,
+    this.downloadFolder = 'busenet',
     this.connectTimeout,
     this.receiveTimeout,
     this.sendTimeout,

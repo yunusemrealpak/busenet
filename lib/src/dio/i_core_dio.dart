@@ -51,4 +51,13 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     bool ignoreEntityKey = false,
     String? insideEntityKey,
   });
+
+  // download file from url
+  Future<Response> downloadFile(
+    String urlPath, {
+    ProgressCallback? onReceiveProgress,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? queryParameters,
+    String lengthHeader = Headers.contentLengthHeader,
+  });
 }
