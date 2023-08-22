@@ -126,7 +126,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   }
 
   @override
-  Future<T> sendPrimitive<E>(
+  Future<T> sendPrimitive<E, R>(
     String path, {
     required HttpTypes type,
     String contentType = Headers.jsonContentType,
@@ -177,7 +177,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         case HttpStatus.accepted:
         case HttpStatus.notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
 
-          final entity = _parseBodyPrimitive<E>(
+          final entity = _parseBodyPrimitive<E, R>(
             response.data,
             entityKey: entityKey,
             insideEntityKey: insideEntityKey,

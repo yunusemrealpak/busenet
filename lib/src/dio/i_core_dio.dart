@@ -33,7 +33,7 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     String? insideEntityKey,
   });
 
-  Future<T> sendPrimitive<E>(
+  Future<T> sendPrimitive<E, R>(
     String path, {
     required HttpTypes type,
     String contentType = Headers.jsonContentType,

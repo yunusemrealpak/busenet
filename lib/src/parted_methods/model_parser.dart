@@ -52,7 +52,7 @@ R? _parseBody<T extends BaseEntity<T>, R>(
   return null;
 }
 
-T? _parseBodyPrimitive<T>(
+R? _parseBodyPrimitive<T, R>(
   dynamic responseBody, {
   String? entityKey,
   String? insideEntityKey,
@@ -77,7 +77,11 @@ T? _parseBodyPrimitive<T>(
   }
 
   try {
-    return data as T?;
+    if (data is List) {
+      return data.map((data) => data as T).cast<T>().toList() as R;
+    }
+
+    return data as R?;
   } catch (e) {
     customPrint(
       fromWhere: 'Network Layer',
