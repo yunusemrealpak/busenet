@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:busenet/busenet.dart';
 
-class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
+final class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
   dynamic data;
   EmptyResponseModel({
     this.data,
@@ -33,8 +33,7 @@ class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
 
   String toJson() => json.encode(toMap());
 
-  factory EmptyResponseModel.fromJson(String source) =>
-      EmptyResponseModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory EmptyResponseModel.fromJson(String source) => EmptyResponseModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   EmptyResponseModel copyWith({
     dynamic data,
