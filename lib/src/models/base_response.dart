@@ -1,6 +1,7 @@
 import 'failure/failure.dart';
 
 abstract class BaseResponse<T> {
+  int? httpStatus;
   int? statusCode;
   String? errorMessage;
   Failure? errorType;

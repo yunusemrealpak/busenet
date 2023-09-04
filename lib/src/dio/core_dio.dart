@@ -80,48 +80,44 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         );
       }
 
-      switch (response.statusCode) {
-        case HttpStatus.ok:
-        case HttpStatus.accepted:
-        case HttpStatus.notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
-
-          final entity = _parseBody<E, R>(
-            response.data,
-            model: parserModel,
-            entityKey: entityKey,
-            insideEntityKey: insideEntityKey,
-          );
-
-          if (responseModel is! EmptyResponseModel) {
-            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
-          }
-
-          if (ignoreEntityKey) {
-            responseModel.setData(response.data);
-          } else {
-            responseModel.setData(entity);
-          }
-          responseModel.statusCode = 1;
-          return responseModel;
-        case 401:
-          final model = responseModel.fromJson(response.data);
-          model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
-          return model;
-        case 404:
-          final model = responseModel.fromJson(response.data);
-          model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
-          return model;
-        default:
-          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
-          responseModel.statusCode = response.statusCode;
-          return responseModel;
+      if (response.statusCode == HttpStatus.unauthorized) {
+        final model = responseModel.fromJson(response.data);
+        model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
+        return model;
       }
+
+      if (response.statusCode == HttpStatus.notFound) {
+        final model = responseModel.fromJson(response.data);
+        model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
+        return model;
+      }
+
+      final entity = _parseBody<E, R>(
+        response.data,
+        model: parserModel,
+        entityKey: entityKey,
+        insideEntityKey: insideEntityKey,
+      );
+
+      if (responseModel is! EmptyResponseModel) {
+        responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+      }
+
+      if (ignoreEntityKey) {
+        responseModel.setData(response.data);
+      } else {
+        responseModel.setData(entity);
+      }
+      // TODO: it will be removed
+      responseModel.httpStatus = response.statusCode;
+      responseModel.statusCode = 1;
+      return responseModel;
     } catch (error) {
       responseModel.statusCode = -1;
       if (error is DioExceptionType) {
         responseModel.errorType = handleError(error, errorMessages);
       } else {
-        responseModel.errorType = UnknownFailure();
+        responseModel.errorType = UnknownFailure(message: error.toString());
       }
       return responseModel;
     }
