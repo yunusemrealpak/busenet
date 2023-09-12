@@ -53,6 +53,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
     String? insideEntityKey,
   }) async {
     try {
+      responseModel.clearResponse();
+
       final response = await request<dynamic>(
         path,
         data: data,

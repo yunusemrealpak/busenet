@@ -42,4 +42,9 @@ final class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
       data: data ?? this.data,
     );
   }
+
+  @override
+  void clearEntity() {
+    data = null;
+  }
 }
