@@ -16,7 +16,7 @@ R? _parseBody<T extends BaseEntity<T>, R>(
     data = responseBody[entityKey];
   }
 
-  if (entityKey != null && insideEntityKey != null) {
+  if (data != null && insideEntityKey != null) {
     data = data[insideEntityKey];
   }
 

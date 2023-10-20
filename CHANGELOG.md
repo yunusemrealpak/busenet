@@ -102,3 +102,7 @@
 ## 0.8.0
 
 * added download feature to network manager
+
+## 0.8.2
+
+* fixed model parser
