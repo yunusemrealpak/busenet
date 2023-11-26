@@ -99,10 +99,15 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         model: parserModel,
         entityKey: entityKey,
         insideEntityKey: insideEntityKey,
+        ignoreEntityKey: ignoreEntityKey,
       );
 
       if (responseModel is! EmptyResponseModel) {
-        responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+        try {
+          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+        } catch (e) {
+          responseModel = responseModel.fromJson({"$entityKey": {}});
+        }
       }
 
       if (ignoreEntityKey) {

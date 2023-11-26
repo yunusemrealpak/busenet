@@ -5,6 +5,7 @@ R? _parseBody<T extends BaseEntity<T>, R>(
   required T model,
   String? entityKey,
   String? insideEntityKey,
+  bool ignoreEntityKey = false,
 }) {
   if (R is NoResultResponse || R == NoResultResponse) {
     return NoResultResponse() as R;
@@ -12,7 +13,7 @@ R? _parseBody<T extends BaseEntity<T>, R>(
 
   dynamic data = responseBody;
 
-  if (entityKey != null) {
+  if (entityKey != null && !ignoreEntityKey) {
     data = responseBody[entityKey];
   }
 

@@ -106,3 +106,7 @@
 ## 0.8.2
 
 * fixed model parser
+
+## 0.8.3
+
+* fixed ignore entity key
