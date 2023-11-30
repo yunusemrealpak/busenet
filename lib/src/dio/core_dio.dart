@@ -110,11 +110,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         }
       }
 
-      if (ignoreEntityKey) {
-        responseModel.setData(response.data);
-      } else {
-        responseModel.setData(entity);
-      }
+      responseModel.setData(entity);
       // TODO: it will be removed
       responseModel.responseStatus = response.statusCode;
       responseModel.statusCode = 1;
