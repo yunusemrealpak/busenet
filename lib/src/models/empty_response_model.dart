@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:busenet/busenet.dart';
 
-final class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
+class EmptyResponseModel extends BaseResponse<EmptyResponseModel> {
   dynamic data;
   EmptyResponseModel({
     this.data,
