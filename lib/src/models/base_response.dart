@@ -6,6 +6,13 @@ abstract class BaseResponse<T> {
   String? errorMessage;
   Failure? errorType;
 
+  BaseResponse({
+    this.responseStatus,
+    this.statusCode,
+    this.errorMessage,
+    this.errorType,
+  });
+
   T fromJson(Map<String, dynamic> json);
   void setData<R>(R entity);
 
