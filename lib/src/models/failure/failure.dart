@@ -1,32 +1,33 @@
 abstract class Failure {
   String? message;
-  Failure({this.message});
+  String? dioError;
+  Failure({this.message, this.dioError});
 }
 
 class CancelFailure extends Failure {
-  CancelFailure({super.message});
+  CancelFailure({super.message, super.dioError});
 }
 
 class TimeoutFailure extends Failure {
-  TimeoutFailure({super.message});
+  TimeoutFailure({super.message, super.dioError});
 }
 
 class ConnectionFailure extends Failure {
-  ConnectionFailure({super.message});
+  ConnectionFailure({super.message, super.dioError});
 }
 
 class ServerFailure extends Failure {
-  ServerFailure({super.message});
+  ServerFailure({super.message, super.dioError});
 }
 
 class UnknownFailure extends Failure {
-  UnknownFailure({super.message});
+  UnknownFailure({super.message, super.dioError});
 }
 
 class UnAuthorizedFailure extends Failure {
-  UnAuthorizedFailure({super.message});
+  UnAuthorizedFailure({super.message, super.dioError});
 }
 
 class NotFoundFailure extends Failure {
-  NotFoundFailure({super.message});
+  NotFoundFailure({super.message, super.dioError});
 }

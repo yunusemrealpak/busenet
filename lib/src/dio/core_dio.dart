@@ -15,8 +15,8 @@ import '../utility/helper_functions.dart';
 import '../utility/typedefs.dart';
 import 'i_core_dio.dart';
 
-part '../parted_methods/model_parser.dart';
 part '../parted_methods/error_handler.dart';
+part '../parted_methods/model_parser.dart';
 
 class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
   late CacheOptions cacheOptions;
@@ -27,7 +27,9 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
 
   ErrorMessages? errorMessages;
 
-  CoreDio(BaseOptions options, this.cacheOptions, this.responseModel, this.entityKey, this.downloadPath, {this.isLoggerEnabled = true, this.errorMessages}) {
+  CoreDio(BaseOptions options, this.cacheOptions, this.responseModel,
+      this.entityKey, this.downloadPath,
+      {this.isLoggerEnabled = true, this.errorMessages}) {
     this.options = options;
     httpClientAdapter = IOHttpClientAdapter();
   }
@@ -84,13 +86,15 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
 
       if (response.statusCode == HttpStatus.unauthorized) {
         final model = responseModel.fromJson(response.data);
-        model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
+        model.errorType = UnAuthorizedFailure(
+            message: errorMessages?.unAuthorizedErrorMessage);
         return model;
       }
 
       if (response.statusCode == HttpStatus.notFound) {
         final model = responseModel.fromJson(response.data);
-        model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
+        model.errorType =
+            NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
         return model;
       }
 
@@ -104,7 +108,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
 
       if (responseModel is! EmptyResponseModel) {
         try {
-          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel =
+              responseModel.fromJson(response.data as Map<String, dynamic>);
         } catch (e) {
           responseModel = responseModel.fromJson({"$entityKey": {}});
         }
@@ -120,7 +125,9 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
       if (error is DioExceptionType) {
         responseModel.errorType = handleError(error, errorMessages);
       } else {
-        responseModel.errorType = UnknownFailure(message: error.toString());
+        responseModel.errorType = UnknownFailure(
+            message: errorMessages?.unknownErrorMessage,
+            dioError: error.toString());
       }
       return responseModel;
     }
@@ -176,7 +183,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
       switch (response.statusCode) {
         case HttpStatus.ok:
         case HttpStatus.accepted:
-        case HttpStatus.notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
+        case HttpStatus
+              .notModified: // 304 : Cache Policy is used and data is not modified since last request (maxStale)
 
           final entity = _parseBodyPrimitive<E, R>(
             response.data,
@@ -185,7 +193,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
           );
 
           if (responseModel is! EmptyResponseModel) {
-            responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+            responseModel =
+                responseModel.fromJson(response.data as Map<String, dynamic>);
           }
 
           if (ignoreEntityKey) {
@@ -197,14 +206,17 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
           return responseModel;
         case 401:
           final model = responseModel.fromJson(response.data);
-          model.errorType = UnAuthorizedFailure(message: errorMessages?.unAuthorizedErrorMessage);
+          model.errorType = UnAuthorizedFailure(
+              message: errorMessages?.unAuthorizedErrorMessage);
           return model;
         case 404:
           final model = responseModel.fromJson(response.data);
-          model.errorType = NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
+          model.errorType =
+              NotFoundFailure(message: errorMessages?.notFoundErrorMessage);
           return model;
         default:
-          responseModel = responseModel.fromJson(response.data as Map<String, dynamic>);
+          responseModel =
+              responseModel.fromJson(response.data as Map<String, dynamic>);
           responseModel.statusCode = response.statusCode;
           return responseModel;
       }
@@ -280,7 +292,8 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
           return;
         }
 
-        onReceiveProgressPercentage?.call(convertToPercentile(received / total));
+        onReceiveProgressPercentage
+            ?.call(convertToPercentile(received / total));
       },
     );
 
