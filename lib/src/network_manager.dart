@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:busenet/src/interceptors/logging_interceptor.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -79,7 +80,10 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       downloadFolderPath,
       errorMessages: configuration.errorMessages,
       isLoggerEnabled: configuration.isLoggerEnabled,
-    )..addInterceptor(DioCacheInterceptor(options: cacheOptions));
+    )
+      ..addInterceptor(DioCacheInterceptor(options: cacheOptions))
+      ..addInterceptor(
+          LoggingInterceptor(isLoggerEnabled: configuration.isLoggerEnabled));
   }
 
   @override

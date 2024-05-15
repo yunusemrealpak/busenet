@@ -110,3 +110,7 @@
 ## 0.8.3
 
 * fixed ignore entity key
+
+## 0.9.0
+
+* added request time logging
