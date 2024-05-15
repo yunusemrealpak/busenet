@@ -114,3 +114,7 @@
 ## 0.9.0
 
 * added request time logging
+
+## 0.9.1
+
+* added uri to request time logging

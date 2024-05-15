@@ -21,7 +21,7 @@ class LoggingInterceptor extends Interceptor {
     if (isLoggerEnabled) {
       customPrint(
         fromWhere: 'LoggingInterceptor',
-        data: '${duration.inMilliseconds}ms',
+        data: '${duration.inMilliseconds}ms - ${response.requestOptions.uri}',
         type: 'Request Time',
       );
     }
