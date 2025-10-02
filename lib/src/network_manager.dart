@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:busenet/src/interceptors/logging_interceptor.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
@@ -11,7 +12,7 @@ import 'configuration/network_configuration.dart';
 import 'dio/core_dio.dart';
 import 'dio/i_core_dio.dart';
 import 'enums/http_types.dart';
-import 'i_netwok_manager.dart';
+import 'i_network_manager.dart';
 import 'models/base_entity.dart';
 import 'models/base_response.dart';
 
@@ -93,7 +94,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
-    CachePolicy cachePolicy = CachePolicy.noCache,
+    BNCachePolicy cachePolicy = BNCachePolicy.noCache,
     Duration? maxStale,
     bool ignoreEntityKey = false,
     String? insideEntityKey,
@@ -125,7 +126,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
-    CachePolicy cachePolicy = CachePolicy.noCache,
+    BNCachePolicy cachePolicy = BNCachePolicy.noCache,
     Duration? maxStale,
     bool ignoreEntityKey = false,
     String? insideEntityKey,

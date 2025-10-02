@@ -1,9 +1,8 @@
 import 'dart:io';
 
+import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
-    hide BaseResponse;
 
 import 'configuration/network_configuration.dart';
 import 'dio/i_core_dio.dart';
@@ -29,7 +28,7 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
-    CachePolicy cachePolicy = CachePolicy.noCache,
+    BNCachePolicy cachePolicy = BNCachePolicy.noCache,
     Duration? maxStale,
     bool ignoreEntityKey = false,
     String? insideEntityKey,
@@ -44,7 +43,7 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
-    CachePolicy cachePolicy = CachePolicy.noCache,
+    BNCachePolicy cachePolicy = BNCachePolicy.noCache,
     Duration? maxStale,
     bool ignoreEntityKey = false,
     String? insideEntityKey,

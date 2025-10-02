@@ -1,8 +1,7 @@
 import 'dart:io';
 
+import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
-    hide BaseResponse;
 
 import '../enums/http_types.dart';
 import '../models/base_entity.dart';
@@ -29,7 +28,7 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     void Function(int, int)? onSendProgress,
 
     /// Cache Options
-    CachePolicy? cachePolicy,
+    BNCachePolicy? cachePolicy,
     Duration? maxStale,
 
     // Entity Options
@@ -48,7 +47,7 @@ abstract class ICoreDio<T extends BaseResponse<T>> {
     void Function(int, int)? onSendProgress,
 
     /// Cache Options
-    CachePolicy? cachePolicy,
+    BNCachePolicy? cachePolicy,
     Duration? maxStale,
 
     // Entity Options

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
@@ -48,7 +49,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
     void Function(int, int)? onSendProgress,
 
     /// Cache Options
-    CachePolicy? cachePolicy,
+    BNCachePolicy? cachePolicy,
     Duration? maxStale,
 
     // Entity Options
@@ -63,7 +64,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         data: data,
         options: cacheOptions
             .copyWith(
-              policy: cachePolicy,
+              policy: mapBNCachePolicyToDioCachePolicy(cachePolicy),
               maxStale: maxStale,
             )
             .toOptions()
@@ -146,7 +147,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
     void Function(int, int)? onSendProgress,
 
     /// Cache Options
-    CachePolicy? cachePolicy,
+    BNCachePolicy? cachePolicy,
     Duration? maxStale,
 
     // Entity Options
@@ -159,7 +160,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         data: data,
         options: cacheOptions
             .copyWith(
-              policy: cachePolicy,
+              policy: mapBNCachePolicyToDioCachePolicy(cachePolicy),
               maxStale: maxStale,
             )
             .toOptions()
