@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
+    hide BaseResponse;
 
 import '../enums/http_types.dart';
 import '../models/base_entity.dart';

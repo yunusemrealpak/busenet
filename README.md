@@ -141,7 +141,6 @@ INetworkManager manager = NetworkManager<FirstResponseModel>()
         ..initialize(
           NetworkConfiguration('<base-url>'),
           responseModel: FirstResponseModel(),
-          cacheStoreKey: 'boilerplate_cache',
           entityKey: 'entity',
         );
 ...
@@ -153,7 +152,6 @@ INetworkManager manager = NetworkManager<SecondResponseModel>()
         ..initialize(
           NetworkConfiguration('<base-url>'),
           responseModel: SecondResponseModel(),
-          cacheStoreKey: 'boilerplate_cache',
           entityKey: 'body',
         );
 ...
@@ -169,7 +167,6 @@ INetworkManager manager = NetworkManager<EmptyResponseModel>()
       ..initialize(
         NetworkConfiguration('<base-url>'),
         responseModel: EmptyResponseModel(),
-        cacheStoreKey: 'example-cache',
       );
 ...
 ```

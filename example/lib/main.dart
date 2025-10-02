@@ -36,7 +36,6 @@ class _MainAppState extends State<MainApp> {
       ..initialize(
         NetworkConfiguration('https://jsonplaceholder.typicode.com'),
         responseModel: EmptyResponseModel(),
-        cacheStoreKey: 'example-cache',
       ).then((value) => initCompleter.complete());
   }
 

@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
+    hide BaseResponse;
 
 import 'configuration/network_configuration.dart';
 import 'dio/i_core_dio.dart';

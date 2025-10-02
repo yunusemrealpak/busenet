@@ -118,3 +118,8 @@
 ## 0.9.1
 
 * added uri to request time logging
+
+## 1.0.0
+
+* Updated dependencies
+* Updated caching mechanism

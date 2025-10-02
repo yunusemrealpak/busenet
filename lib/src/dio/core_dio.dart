@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
+    hide BaseResponse;
 
 import '../enums/http_types.dart';
 import '../models/base_entity.dart';
@@ -63,7 +64,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         options: cacheOptions
             .copyWith(
               policy: cachePolicy,
-              maxStale: Nullable<Duration>(maxStale),
+              maxStale: maxStale,
             )
             .toOptions()
             .copyWith(
@@ -159,7 +160,7 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
         options: cacheOptions
             .copyWith(
               policy: cachePolicy,
-              maxStale: Nullable<Duration>(maxStale),
+              maxStale: maxStale,
             )
             .toOptions()
             .copyWith(

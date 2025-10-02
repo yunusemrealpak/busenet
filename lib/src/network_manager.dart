@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:busenet/src/interceptors/logging_interceptor.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
+    hide BaseResponse;
 import 'package:path_provider/path_provider.dart';
 
 import 'configuration/network_configuration.dart';
@@ -17,15 +17,14 @@ import 'models/base_response.dart';
 
 class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
   late ICoreDio<T> dio;
-  late HiveCacheStore cacheStore;
   late T responseModel;
+  late CacheStore cacheStore;
 
   @override
   Future<void> initialize(
     NetworkConfiguration configuration, {
     required T responseModel,
     String? entityKey,
-    String? cacheStoreKey,
   }) async {
     final baseOptions = BaseOptions(
       baseUrl: configuration.baseUrl,
@@ -55,21 +54,15 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       await Directory(downloadFolderPath).create(recursive: true);
     }
 
-    // Cache
-    cacheStore = HiveCacheStore(
-      dirr.path,
-      hiveBoxName: cacheStoreKey ?? 'network_cache',
-    );
+    cacheStore = MemCacheStore();
 
     final cacheOptions = CacheOptions(
       store: cacheStore,
       policy: CachePolicy.noCache,
       priority: CachePriority.high,
       maxStale: const Duration(minutes: 1),
-      hitCacheOnErrorExcept: [401, 404],
-      keyBuilder: (request) {
-        return request.uri.toString();
-      },
+      hitCacheOnErrorCodes: [500],
+      keyBuilder: CacheOptions.defaultCacheKeyBuilder,
     );
 
     dio = CoreDio<T>(
