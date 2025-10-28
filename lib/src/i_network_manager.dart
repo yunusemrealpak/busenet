@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 
 import 'configuration/network_configuration.dart';
 import 'dio/i_core_dio.dart';
@@ -16,6 +17,7 @@ abstract class INetworkManager<T extends BaseResponse<T>> {
     NetworkConfiguration configuration, {
     required T responseModel,
     String? entityKey,
+    IOHttpClientAdapter? adapter,
   });
 
   Future<T> fetch<E extends BaseEntity<E>, R>(
