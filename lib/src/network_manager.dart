@@ -4,6 +4,7 @@ import 'package:busenet/src/enums/bn_cache_policy.dart';
 import 'package:busenet/src/interceptors/logging_interceptor.dart';
 import 'package:busenet/src/utility/typedefs.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart'
     hide BaseResponse;
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +27,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
     NetworkConfiguration configuration, {
     required T responseModel,
     String? entityKey,
+    IOHttpClientAdapter? adapter,
   }) async {
     final baseOptions = BaseOptions(
       baseUrl: configuration.baseUrl,
@@ -74,6 +76,7 @@ class NetworkManager<T extends BaseResponse<T>> implements INetworkManager<T> {
       downloadFolderPath,
       errorMessages: configuration.errorMessages,
       isLoggerEnabled: configuration.isLoggerEnabled,
+      adapter: adapter,
     )
       ..addInterceptor(DioCacheInterceptor(options: cacheOptions))
       ..addInterceptor(

@@ -31,9 +31,11 @@ class CoreDio<T extends BaseResponse<T>> with DioMixin implements ICoreDio<T> {
 
   CoreDio(BaseOptions options, this.cacheOptions, this.responseModel,
       this.entityKey, this.downloadPath,
-      {this.isLoggerEnabled = true, this.errorMessages}) {
+      {this.isLoggerEnabled = true,
+      this.errorMessages,
+      IOHttpClientAdapter? adapter}) {
     this.options = options;
-    httpClientAdapter = IOHttpClientAdapter();
+    httpClientAdapter = adapter ?? IOHttpClientAdapter();
   }
 
   @override
