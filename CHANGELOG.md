@@ -1,3 +1,12 @@
+## 1.0.3
+
+* Added IOHttpClientAdapter parameter to INetworkManager initialize method
+
+## 1.0.2
+
+* Added support for custom HTTP client adapters
+* Improved flexibility in network manager initialization
+
 ## 1.0.1
 
 * Added BNCachePolicy enum to replace direct usage of dio_cache_interceptor CachePolicy
